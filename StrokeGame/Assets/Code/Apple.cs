@@ -12,23 +12,29 @@ public class Apple : MonoBehaviour
 
     void Start()
     {
-        float speed;
-        Debug.Log(gameObject.GetComponent<Rigidbody2D>().mass);
-        if (GameObject.Find("GameController").GetComponent<GameController>().appleSpeed <= 0.1)
-        {
-            speed = 0.1f;
-            //gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
-            GameObject.Find("SpeedValue").GetComponent<Text>().text = speed.ToString();
-            
+        //float speed;
+        //Debug.Log(gameObject.GetComponent<Rigidbody2D>().mass);
+        var gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        if (gameController.appleGravity >= 0.5) {
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = gameController.appleGravity;
         }
-        else
-        {
-            speed = GameObject.Find("GameController").GetComponent<GameController>().appleSpeed;
-           // gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
-            GameObject.Find("SpeedValue").GetComponent<Text>().text = speed.ToString();
-            
-            
-        }
+
+        //if (gameController.appleGravity < 0.5)
+        //{
+        //    speed = 0.5f;
+        //    //gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
+        //    //GameObject.Find("SpeedValue").GetComponent<Text>().text = speed.ToString();
+
+        //}
+        //else
+        //{
+        //    speed = 
+        //    gameObject.GetComponent<Rigidbody2D>().gravityScale = gameController.appleGravity;
+        //    // gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
+        //    //GameObject.Find("SpeedValue").GetComponent<Text>().text = speed.ToString();
+
+
+        //}
     }
 
    
