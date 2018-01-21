@@ -16,15 +16,14 @@ public class BasketCatcher : MonoBehaviour
 
     {
         Destroy(GameObject.FindGameObjectWithTag("apple").gameObject);
-        GameObject.Find("GameController").GetComponent<GameController>().next = true;
+        var gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        gameController.next = true;
         score += 1;
         catchCount += 1;
         Debug.Log(catchCount);
         if (catchCount >= 3)
-        {
-           
-            float speed = GameObject.Find("GameController").GetComponent<GameController>().appleSpeed += 2f;
-
+        {           
+            float speed = gameController.appleGravity += 1f;
         }
     }
 
