@@ -14,9 +14,13 @@ public class GameController : MonoBehaviour
     public float timeLeft = 50f;
     public GameObject basket;
     public float appleSpeed = 10;
-    public float appleGravity = 1.0f;
+    public float appleGravity = 1f;
     public Rect cameraRect;
     public bool next;
+    public System.DateTime startTime;
+    
+
+
 
     // Use this for initialization
     void Start()
@@ -25,7 +29,7 @@ public class GameController : MonoBehaviour
         {
             cam = Camera.main;
         }
-        appleGravity = 1.0f;
+        appleGravity = 1f;
         var bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         var topRight = cam.ScreenToWorldPoint(new Vector3(
             cam.pixelWidth, cam.pixelHeight));
@@ -46,12 +50,16 @@ public class GameController : MonoBehaviour
         StartCoroutine(Spawn());
     }
 
+    private System.DateTime getTime()
+    {
+        return System.DateTime.Now;
+    }
     private void FixedUpdate()
     {
         timeLeft -= Time.deltaTime;
         GameObject.Find("TimeValue").GetComponent<Text>().text = Mathf.RoundToInt(timeLeft).ToString();
-		Debug.Log(next);
-
+        //Debug.Log(GameObject.Find("Apple(Clone)").transform.position.y);
+               
     }
 
     private bool CentPos()
@@ -99,11 +107,14 @@ public class GameController : MonoBehaviour
 			{
 				next = false;
 				Instantiate(ball, spawnPosition, spawnRotation);
-				yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+                startTime = getTime();
+                //Debug.Log(startTime.ToString());
+                yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
 			}
 
             yield return new WaitForSeconds(0.5f);
         }
+
     }
 }
 

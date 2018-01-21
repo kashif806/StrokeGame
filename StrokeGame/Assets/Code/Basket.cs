@@ -17,6 +17,7 @@ public class Basket : MonoBehaviour
     public GameObject BasketCatcher;
     public GameObject UpperBoundary;
     public GameObject LowerBoundary;
+    public System.DateTime endTime;
 
 
     private void Start()
@@ -38,8 +39,13 @@ public class Basket : MonoBehaviour
         Vector3 TargetWidth = cam.ScreenToWorldPoint(upperCorner);
         
     }
-    
-    
+
+    private System.DateTime getTime()
+    {
+        return System.DateTime.Now;
+    }   
+
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -73,6 +79,32 @@ public class Basket : MonoBehaviour
 
         
         GameObject.Find("ScoreNo").GetComponent<Text>().text = BasketCatcher.GetComponent<BasketCatcher>().GetScore().ToString();
+
+        if (GameObject.Find("Apple(Clone)") == true)
+        {
+
+            if (GameObject.Find("BasketCatcher").GetComponent<BasketCatcher>().caught == true)
+            {
+                endTime = GameObject.Find("BasketCatcher").GetComponent<BasketCatcher>().endTime;
+                TimeSpan ts = (GameObject.Find("GameController").GetComponent<GameController>().startTime) - endTime;
+                Debug.Log("total time" + ts.ToString());
+                GameObject.Find("BasketCatcher").GetComponent<BasketCatcher>().caught = false;
+            }
+
+            else if (GameObject.Find("Apple(Clone)").transform.position.y < -4.2 && GameObject.Find("Apple(Clone)").transform.position.y > -4.35)
+            {
+
+                 endTime = getTime();
+                 //Debug.Log("END TM: " + endTime);
+                 
+                TimeSpan ts = (GameObject.Find("GameController").GetComponent<GameController>().startTime) - endTime;
+                Debug.Log("total time" + ts.ToString());
+                
+            }
+        }
+        
+
+
 
 
 

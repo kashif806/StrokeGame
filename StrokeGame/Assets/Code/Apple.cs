@@ -15,10 +15,15 @@ public class Apple : MonoBehaviour
         //float speed;
         //Debug.Log(gameObject.GetComponent<Rigidbody2D>().mass);
         var gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        if (gameController.appleGravity >= 0.5) {
+        if (gameController.appleGravity > 0.1f) {
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gameController.appleGravity;
         }
+        else
+        {
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+        }
 
+        Debug.Log("apple speed: " + gameObject.GetComponent<Rigidbody2D>().gravityScale);
         //if (gameController.appleGravity < 0.5)
         //{
         //    speed = 0.5f;
