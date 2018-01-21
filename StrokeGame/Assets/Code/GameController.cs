@@ -14,9 +14,10 @@ public class GameController : MonoBehaviour
     public float timeLeft = 50f;
     public GameObject basket;
     public float appleSpeed = 10;
-    public float appleGravity = 1.0f;
     public Rect cameraRect;
     public bool next;
+
+
 
     // Use this for initialization
     void Start()
@@ -25,7 +26,7 @@ public class GameController : MonoBehaviour
         {
             cam = Camera.main;
         }
-        appleGravity = 1.0f;
+
         var bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         var topRight = cam.ScreenToWorldPoint(new Vector3(
             cam.pixelWidth, cam.pixelHeight));
@@ -42,7 +43,6 @@ public class GameController : MonoBehaviour
         timeDelay = 2.5f;
         maxWidth = targetWidth.x - ballWidth;
         next = true;
-		GameObject.Find("Message").GetComponent<Text>().text = "";
         StartCoroutine(Spawn());
     }
 
@@ -50,16 +50,17 @@ public class GameController : MonoBehaviour
     {
         timeLeft -= Time.deltaTime;
         GameObject.Find("TimeValue").GetComponent<Text>().text = Mathf.RoundToInt(timeLeft).ToString();
-		Debug.Log(next);
+        //Debug.Log(CentPos());
 
+    }
+    private void Update()
+    {
+        Debug.Log("Next: " + next);
     }
 
     private bool CentPos()
     {
-        if (basket.transform.position.x < 1.5 
-            && basket.transform.position.x > -1.5
-            && GameObject.Find("BasketCatcher").GetComponent<EdgeCollider2D>().enabled == true
-            )
+        if (basket.transform.position.x < 1.5 && basket.transform.position.x > -1.5)
         {
             GameObject.Find("Message").GetComponent<Text>().text = "";
             GameObject.Find("RightBoundary").GetComponent<SpriteRenderer>().color = Color.clear;
@@ -80,29 +81,41 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         while (timeLeft > 0)
-        {  
-            int x = 1;
-			switch (Random.Range (1, 3)) 
-			{
-				case 1:
-					x = 1;
-					break;
-			default:
-				x = -1;
-				break;
-			}
+        {   
+           /* if (next == false)
+            {
+                continue;
+            }*/
+            int x = Random.Range(1, 3);
+            if (x == 1)
+            {
+                Vector3 spawnPosition = new Vector3(maxWidth, transform.position.y, 0.0f);
+                Quaternion spawnRotation = Quaternion.identity;
+                if (CentPos() == true )
+                {
 
-			Vector3 screenTop = cam.ScreenToWorldPoint (new Vector3 (0.0f, Screen.height, 0.0f));
-			Vector3 spawnPosition = new Vector3(x * maxWidth, screenTop.y, 0.0f);
-			Quaternion spawnRotation = Quaternion.identity;
-			if (next && CentPos())
-			{
-				next = false;
-				Instantiate(ball, spawnPosition, spawnRotation);
-				yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
-			}
+                    next = false;
+                    Instantiate(ball, spawnPosition, spawnRotation);
+                    
+                    
+                }
+                yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+            }
+            if (x==2)
+            {
+                Vector3 spawnPosition = new Vector3(-maxWidth, transform.position.y, 0.0f);
+                Quaternion spawnRotation = Quaternion.identity;
+                if (CentPos() == true)
+                {
+                    next = false;
+                    Instantiate(ball, spawnPosition, spawnRotation);
+                    
+                   
+                }
+                yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+            }
 
-            yield return new WaitForSeconds(0.5f);
+
         }
     }
 }

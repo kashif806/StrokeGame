@@ -10,9 +10,8 @@ public class MissedCatcher : MonoBehaviour
 
     {
         Destroy(GameObject.FindGameObjectWithTag("apple").gameObject);
-        var gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        gameController.next = true;
-        gameController.appleSpeed -= 0.5f;
+        GameObject.Find("GameController").GetComponent<GameController>().next = true;
+        float speed = GameObject.Find("GameController").GetComponent<GameController>().appleSpeed -= 2f;
         GameObject.Find("BasketCatcher").GetComponent<BasketCatcher>().catchCount = 0;
         
     }
