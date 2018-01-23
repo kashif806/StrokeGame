@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Diagnostics;
 
 public class GameController : MonoBehaviour
 {
@@ -20,7 +21,10 @@ public class GameController : MonoBehaviour
     public System.DateTime startTime;
     public float timer;
     int trailNo = 0;
-    
+    Stopwatch appleStopwatch = new Stopwatch();
+
+    GameDateStore myGameDateStore;
+
 
 
 
@@ -49,6 +53,10 @@ public class GameController : MonoBehaviour
         maxWidth = targetWidth.x - ballWidth;
         next = true;
 		GameObject.Find("Message").GetComponent<Text>().text = "";
+
+        appleStopwatch = new Stopwatch();
+        myGameDateStore = new GameDateStore();
+
         StartCoroutine(Spawn());
     }
 
@@ -112,7 +120,10 @@ public class GameController : MonoBehaviour
                 trailNo += 1;
                
                 next = false;
-				Instantiate(ball, spawnPosition, spawnRotation);
+
+                appleStopwatch.Reset();
+                appleStopwatch.Start();
+                Instantiate(ball, spawnPosition, spawnRotation);
                 timer += Time.time;
                 
                // startTime = getTime();
@@ -123,6 +134,28 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
+    }
+
+    public void stopStopwatch() {
+        if (appleStopwatch.IsRunning) {
+            appleStopwatch.Stop();
+        }
+    }
+
+    public void appleDestroyed(bool isAppleCatched) {
+        if (appleStopwatch.IsRunning)
+        {
+            appleStopwatch.Stop();
+        }
+        long timeTaken = appleStopwatch.ElapsedMilliseconds;
+        myGameDateStore.addData(new GameDate() {
+            trailNo = trailNo,
+            appleFallTime = timeTaken,
+            appleCatched = isAppleCatched
+        });
+
+        appleStopwatch.Reset();
+        next = true;
     }
 }
 

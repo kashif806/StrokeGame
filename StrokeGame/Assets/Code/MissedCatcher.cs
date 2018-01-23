@@ -25,15 +25,14 @@ public class MissedCatcher : MonoBehaviour
         //endTime = getTime();
         //Debug.Log("END TM: " + endTime);
 
-       // TimeSpan ts = (GameObject.Find("GameController").GetComponent<GameController>().startTime) - endTime;
+        // TimeSpan ts = (GameObject.Find("GameController").GetComponent<GameController>().startTime) - endTime;
         //Debug.Log("total time" + ts.ToString());
-        Debug.Log("timer : " + GameObject.Find("GameController").GetComponent<GameController>().timer);
-        GameObject.Find("GameController").GetComponent<GameController>().timer = 0; 
-
-
-        gameController.next = true;
+        //Debug.Log("timer : " + GameObject.Find("GameController").GetComponent<GameController>().timer);
+        //GameObject.Find("GameController").GetComponent<GameController>().timer = 0; 
+        //gameController.next = true;
+                
         gameController.appleGravity -= 0.2f;
         GameObject.Find("BasketCatcher").GetComponent<BasketCatcher>().catchCount = 0;
-        
+        gameController.appleDestroyed(false);
     }
 }

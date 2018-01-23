@@ -8,7 +8,7 @@ public class Apple : MonoBehaviour
 
     //public float appleSpeed = 5f;
     //public Vector3 applePosn;
-  
+    float targetLineForFallTime;
 
     void Start()
     {
@@ -24,6 +24,10 @@ public class Apple : MonoBehaviour
         }
 
         Debug.Log("apple speed: " + gameObject.GetComponent<Rigidbody2D>().gravityScale);
+
+        float upperBoundaryY = GameObject.Find("UpperBoundary").GetComponent<Transform>().position.y;
+        float lowerBoundaryY = GameObject.Find("LowerBoundary").GetComponent<Transform>().position.y;
+        targetLineForFallTime = (upperBoundaryY + lowerBoundaryY) / 2;
         //if (gameController.appleGravity < 0.5)
         //{
         //    speed = 0.5f;
@@ -42,6 +46,11 @@ public class Apple : MonoBehaviour
         //}
     }
 
-   
+    private void Update()
+    {
+        if (gameObject.transform.position.y <= targetLineForFallTime) {
+            GameObject.Find("GameController").GetComponent<GameController>().stopStopwatch();
+        }
+    }
 
 }

@@ -23,11 +23,11 @@ public class BasketCatcher : MonoBehaviour
         Destroy(GameObject.FindGameObjectWithTag("apple").gameObject);
         caught = true;
         //endTime = getTime();
-        Debug.Log("timer : " + GameObject.Find("GameController").GetComponent<GameController>().timer);
-        GameObject.Find("GameController").GetComponent<GameController>().timer = 0;
+        //Debug.Log("timer : " + GameObject.Find("GameController").GetComponent<GameController>().timer);
+        //GameObject.Find("GameController").GetComponent<GameController>().timer = 0;
 
         var gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        gameController.next = true;
+        //gameController.next = true;        
         score += 1;
         catchCount += 1;
        // Debug.Log(catchCount);
@@ -35,6 +35,7 @@ public class BasketCatcher : MonoBehaviour
         {           
             float speed = gameController.appleGravity += 1f;
         }
+        gameController.appleDestroyed(true);
     }
 
     public int GetScore()
