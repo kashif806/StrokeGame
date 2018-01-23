@@ -80,7 +80,7 @@ public class Basket : MonoBehaviour
         
         GameObject.Find("ScoreNo").GetComponent<Text>().text = BasketCatcher.GetComponent<BasketCatcher>().GetScore().ToString();
 
-        if (GameObject.Find("Apple(Clone)") == true)
+       /* if (GameObject.Find("Apple(Clone)") == true)
         {
 
             if (GameObject.Find("BasketCatcher").GetComponent<BasketCatcher>().caught == true)
@@ -101,7 +101,7 @@ public class Basket : MonoBehaviour
                 Debug.Log("total time" + ts.ToString());
                 
             }
-        }
+        }*/
         
 
 

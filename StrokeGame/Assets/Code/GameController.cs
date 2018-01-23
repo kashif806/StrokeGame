@@ -11,13 +11,15 @@ public class GameController : MonoBehaviour
     private float maxWidth;
     private float ballWidth;
     public float timeDelay = 2.0f;
-    public float timeLeft = 50f;
+    //public float timeLeft = 50f;
     public GameObject basket;
     public float appleSpeed = 10;
     public float appleGravity = 1f;
     public Rect cameraRect;
     public bool next;
     public System.DateTime startTime;
+    public float timer;
+    int trailNo = 0;
     
 
 
@@ -50,14 +52,14 @@ public class GameController : MonoBehaviour
         StartCoroutine(Spawn());
     }
 
-    private System.DateTime getTime()
-    {
-        return System.DateTime.Now;
-    }
+    //private System.DateTime getTime()
+   // {
+   //     return System.DateTime.Now;
+  //  }
     private void FixedUpdate()
     {
-        timeLeft -= Time.deltaTime;
-        GameObject.Find("TimeValue").GetComponent<Text>().text = Mathf.RoundToInt(timeLeft).ToString();
+        //timeLeft -= Time.deltaTime;
+        GameObject.Find("TrailNo").GetComponent<Text>().text = trailNo.ToString();
         //Debug.Log(GameObject.Find("Apple(Clone)").transform.position.y);
                
     }
@@ -87,8 +89,10 @@ public class GameController : MonoBehaviour
     IEnumerator Spawn()
     {
         yield return new WaitForSeconds(2.0f);
-        while (timeLeft > 0)
-        {  
+        
+        while (true)
+        {
+            
             int x = 1;
 			switch (Random.Range (1, 3)) 
 			{
@@ -105,10 +109,14 @@ public class GameController : MonoBehaviour
 			Quaternion spawnRotation = Quaternion.identity;
 			if (next && CentPos())
 			{
-				next = false;
+                trailNo += 1;
+               
+                next = false;
 				Instantiate(ball, spawnPosition, spawnRotation);
-                startTime = getTime();
-                //Debug.Log(startTime.ToString());
+                timer += Time.time;
+                
+               // startTime = getTime();
+                //Debug.Log("Start: " + startTime.ToString());
                 yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
 			}
 
