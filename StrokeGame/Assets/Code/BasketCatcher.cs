@@ -12,28 +12,26 @@ public class BasketCatcher : MonoBehaviour
     public System.DateTime endTime;
     public bool caught = false;
 
-    //private System.DateTime getTime()
-    //{
-     //   return System.DateTime.Now;
-    //}
 
     void OnTriggerEnter2D(Collider2D collision)
 
     {
         Destroy(GameObject.FindGameObjectWithTag("apple").gameObject);
         caught = true;
-        //endTime = getTime();
-        //Debug.Log("timer : " + GameObject.Find("GameController").GetComponent<GameController>().timer);
-        //GameObject.Find("GameController").GetComponent<GameController>().timer = 0;
 
-        var gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        //gameController.next = true;        
+
+        var gameController = GameObject.Find("GameController").GetComponent<GameController>();            
+        
+            gameController.appleGravity += 0.05f;  // slacking factor
+
+
+
         score += 1;
         catchCount += 1;
-       // Debug.Log(catchCount);
+  
         if (catchCount >= 3)
         {           
-            float speed = gameController.appleGravity += 1f;
+           gameController.appleGravity += 1f;
         }
         gameController.appleDestroyed(true);
     }

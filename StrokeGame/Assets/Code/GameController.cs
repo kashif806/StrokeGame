@@ -26,8 +26,6 @@ public class GameController : MonoBehaviour
     GameDateStore myGameDateStore;
 
 
-
-
     // Use this for initialization
     void Start()
     {
@@ -68,8 +66,10 @@ public class GameController : MonoBehaviour
     {
         //timeLeft -= Time.deltaTime;
         GameObject.Find("TrailNo").GetComponent<Text>().text = trailNo.ToString();
+       
+
         //Debug.Log(GameObject.Find("Apple(Clone)").transform.position.y);
-               
+
     }
 
     private bool CentPos()
@@ -148,6 +148,7 @@ public class GameController : MonoBehaviour
             appleStopwatch.Stop();
         }
         long timeTaken = appleStopwatch.ElapsedMilliseconds;
+        GameObject.Find("TimeValue").GetComponent<Text>().text = timeTaken.ToString();
         myGameDateStore.addData(new GameDate() {
             trailNo = trailNo,
             appleFallTime = timeTaken,
